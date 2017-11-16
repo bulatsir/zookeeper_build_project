@@ -14,8 +14,8 @@
       sudo: yes
       apt: pkg=openjdk-7-jre-headless state=installed update_cache=true
 
-#    - name: copy env files for building deb package
-#     copy: src=zookeeper-3.4.9 dest=/home/vagrant/
+    - name: copy env files for building deb package
+      copy: src=zookeeper-3.4.9 dest=/home/vagrant/
 
     - file:
          path: /home/vagrant/zookeeper-3.4.9/DEBIAN/postinst
