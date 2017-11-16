@@ -1,0 +1,8 @@
+#!/bin/sh
+
+update-rc.d zookeeper defaults 95
+mkdir -p /etc/zookeeper/conf
+mkdir -p /var/log/zookeeper
+chmod 755 /etc/init.d/zookeeper
+chmod 755 /usr/local/zookeeper/bin/zkServer.sh
+

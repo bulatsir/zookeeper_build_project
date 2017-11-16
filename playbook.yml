@@ -1,0 +1,43 @@
+- hosts: host0
+  tasks:
+    - name: edit resolv.conf
+      sudo: yes
+      shell: echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+      args:
+         executable: /bin/bash
+
+    - name: install tools 
+      sudo: yes
+      apt: pkg=pkgbinarymangler state=installed update_cache=true
+
+    - name: install java
+      sudo: yes
+      apt: pkg=openjdk-7-jre-headless state=installed update_cache=true
+
+#    - name: copy env files for building deb package
+#     copy: src=zookeeper-3.4.9 dest=/home/vagrant/
+
+    - file:
+         path: /home/vagrant/zookeeper-3.4.9/DEBIAN/postinst
+         owner: vagrant
+         group: vagrant
+         mode: 0755      
+
+    - name: build package
+      sudo: yes
+      shell: dpkg-deb --build zookeeper-3.4.9/
+      args:
+         chdir: /home/vagrant/
+
+    - name: install package
+      sudo: yes
+      shell: dpkg -i zookeeper-3.4.9.deb
+      args:
+         chdir: /home/vagrant/
+
+    - name: service zookeeper start 
+      ignore_errors: yes
+      sudo: yes
+      service:  
+         name: zookeeper
+         state: started
