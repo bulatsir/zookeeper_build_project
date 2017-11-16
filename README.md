@@ -18,3 +18,9 @@ _vagrant up_
 Запустить сценарий сборки пакета:
 
 _ansible-playbook -i host playbook.yml -v_
+
+Проверка работы Zookeeper
+
+_echo ruok | nc 192.168.2181_
+
+Если ответ imok, то Zookeeper работает
